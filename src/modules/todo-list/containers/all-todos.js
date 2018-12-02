@@ -2,8 +2,18 @@ import { connect } from "react-redux";
 import Todos from "../components/todos";
 import { todoActions as actions } from "../actions";
 
+const filterTodos = state => {
+  switch (state.todos.filter) {
+    case "completed":
+      return state.todos.todos.filter(todo => todo.completed);
+    case "wip":
+    default:
+      return state.todos.todos;
+  }
+};
+
 const mapStateToProps = state => {
-  return { todos: state.todos.todos };
+  return { todos: filterTodos(state) };
 };
 
 const mapDispatchToProps = dispatch => ({

@@ -38,6 +38,10 @@ export const todoActions = {
   editTodo: todo => ({
     type: "EDIT_TODO",
     payload: todo
+  }),
+  switchFilter: filter => ({
+    type: "SWITCH_FILTER",
+    payload: filter
   })
 };
 

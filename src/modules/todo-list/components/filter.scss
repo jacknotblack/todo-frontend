@@ -1,0 +1,21 @@
+.filter-bar {
+  display: flex;
+  flex: 1;
+  height: 76px;
+  background: #4a90e2;
+  font-size: 24px;
+  color: #00408b;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 20%;
+  .filter-item {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    padding: 0 20px;
+    &.active {
+      color: white;
+      border-bottom: 5px solid #00408b;
+    }
+  }
+}

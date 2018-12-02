@@ -4,7 +4,9 @@ import "./todos.scss";
 
 const Todos = ({ todos, editTodo, createTodo, addTodo }) => (
   <div className="todos">
-    <div onClick={() => createTodo()}>+ Add Task</div>
+    <div className="add-btn" onClick={() => createTodo()}>
+      + Add Task
+    </div>
     {todos.map(todo => (
       <Todo
         key={todo.id}

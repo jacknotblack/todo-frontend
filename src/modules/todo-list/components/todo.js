@@ -84,6 +84,7 @@ class Todo extends Component {
               <span>Comment</span>
               <textarea
                 value={this.state.todo.comment}
+                placeholder="Type your memo here…"
                 onChange={e => {
                   this.setState({
                     todo: { ...this.state.todo, comment: e.target.value }

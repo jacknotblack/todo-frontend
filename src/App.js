@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { todoActions as actions } from "./modules/todo-list/actions";
 import ConnectedAllTodos from "./modules/todo-list/containers/all-todos";
-import "./App.css";
+import ConnectedFilter from "./modules/todo-list/containers/filter";
+import "./App.scss";
 
 class App extends Component {
   componentDidMount() {
@@ -12,6 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <ConnectedFilter />
         <ConnectedAllTodos />
       </div>
     );

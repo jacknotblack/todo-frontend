@@ -1,12 +1,18 @@
 import { deepCopy } from "../../tools";
 
 export const initState = {
-  todos: []
+  todos: [],
+  filter: "all"
 };
 
 const todoReducers = (state = initState, action) => {
   const { playLists } = state;
   switch (action.type) {
+    case "SWITCH_FILTER":
+      return {
+        ...state,
+        filter: action.payload
+      };
     case "GET_TODOS_SUCCESS":
       return {
         ...state,

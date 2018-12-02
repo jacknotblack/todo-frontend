@@ -1,9 +1,9 @@
 .todo {
   background: #f2f2f2;
   box-shadow: 0 4px 4px 0 #c8c8c8;
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px;
 
-  margin: 22px 0 24px 0;
+  margin: 0 0 8px 0;
   .brief {
     display: flex;
     flex: 1;
@@ -18,14 +18,19 @@
   }
   .left {
     display: flex;
+    align-items: center;
   }
   .right {
     display: flex;
+    align-items: center;
   }
   .name {
     font-family: Roboto-Medium;
     font-size: 24px;
     color: #000000;
+  }
+  input[type="checkbox"] {
+    font-size: 24px;
   }
 
   .control-btns {
@@ -38,6 +43,7 @@
       align-items: center;
       justify-content: center;
       font-size: 24px;
+      border-radius: 0 0 5px 5px;
     }
     > div:first-child {
       color: red;
