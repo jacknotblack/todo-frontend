@@ -1,0 +1,13 @@
+.todos {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 2px solid #c8c8c8;
+  border-radius: 5px;
+  font-size: 24px;
+  color: #c8c8c8;
+  text-align: left;
+  > div {
+    align-items: center;
+  }
+}

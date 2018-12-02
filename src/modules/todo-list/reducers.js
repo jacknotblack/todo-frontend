@@ -6,17 +6,11 @@ export const initState = {
 
 const todoReducers = (state = initState, action) => {
   const { playLists } = state;
-  const editTodo = (todos, todo) => {
-    const index = todos.findIndex(t => t.id === todo.id);
-    const alteredTodos = deepCopy(todos);
-    alteredTodos.splice(index, 1, todo);
-    return alteredTodos;
-  };
   switch (action.type) {
     case "GET_TODOS_SUCCESS":
       return {
         ...state,
-        todos: action.payload
+        todos: action.payload.reverse()
       };
     case "CREATE_TODO":
       return {
@@ -37,11 +31,6 @@ const todoReducers = (state = initState, action) => {
       );
       return { ...state, todos };
 
-    // case "EDIT_TODO":
-    //   return {
-    //     ...state,
-    //     todos: editTodo(state.todos, action.payload)
-    //   };
     case "ADD_SONG_TO_LIST_SUCCESS":
       const { listID, songID } = action.payload;
       const listIdx = state.playLists.findIndex(list => list.id === listID);

@@ -11,54 +11,32 @@ class Todo extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.todo);
     if (this.props.todo.editing !== undefined) {
       this.setState({ editing: this.props.todo.editing });
     }
     this.setState({ todo: this.props.todo });
   }
 
-  shouldComponentUpdate(next) {
-    console.log(this.props, next);
-    return true;
-  }
-  componentWillReceiveProps() {
-    console.log(this.props);
-  }
-
-  componentDidUpdate() {
-    // this.setState({
-    //   todo: { ...this.state.todo, comment: this.props.todo.comment }
-    // });
-  }
   completeTodo = () => {
     const { todo } = this.props;
-    console.log(this.state.todo);
-    this.setState({ todo: { ...this.state.todo, completed: false } });
     this.props.editTodo({ ...todo, completed: !todo.completed });
   };
   editTodo = () => {
-    // const { todo } = this.props;
-    console.log(this.state.todo);
     this.props.editTodo(this.state.todo);
     this.setState({ editing: false });
   };
 
   addTodo = () => {
-    // const { todo } = this.props;
     this.props.addTodo(this.state.todo);
     this.setState({ editing: false });
   };
 
   render() {
-    const { completed } = this.props;
-    // const { star, completed } = todo;
-    // console.log(this.state);
-    const { editing, todo } = this.state;
-    console.log(this.props.todo.completed);
+    const { completed, name } = this.props.todo;
+    const { editing } = this.state;
     return (
-      <div className={`todo ${completed ? "completed" : ""}`}>
-        <div className="brief">
+      <div className="todo">
+        <div className={`brief ${completed ? "completed" : ""}`}>
           <div className="left">
             <input
               type="checkbox"
@@ -81,7 +59,7 @@ class Todo extends Component {
                   }}
                 />
               ) : (
-                <span>{todo.name}</span>
+                <span>{name}</span>
               )}
             </div>
           </div>
@@ -115,7 +93,6 @@ class Todo extends Component {
             </div>
             <div className="control-btns">
               <div className="X cancel">Cancel</div>
-              {console.log(this.props.todo.id)}
               <div
                 className="save"
                 onClick={
@@ -131,18 +108,5 @@ class Todo extends Component {
     );
   }
 }
-
-// const Todo = ({ name, completed, star, editing }) => (
-//   <div className="todo">
-//     <div className="left">
-//       <input type="checkbox" name="completed" checked={completed} />
-//       <div>{name}</div>
-//     </div>
-//     <div className="right">
-//       <div>{star ? "star" : "no"}</div>
-//       <div>{editing ? "editing" : "edit"}</div>
-//     </div>
-//   </div>
-// );
 
 export default Todo;
