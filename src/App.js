@@ -1,28 +1,35 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { todoActions as actions } from "./modules/todo-list/actions";
+import ConnectedAllTodos from "./modules/todo-list/containers/all-todos";
+import "./App.css";
 
 class App extends Component {
+  componentDidMount() {
+    this.props.getTodos();
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <ConnectedAllTodos />
       </div>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  getTodos: () => {
+    dispatch(actions.getTodos());
+  }
+});
+
+const ConnectedApp = connect(
+  // mapStateToProps,
+  null,
+  mapDispatchToProps
+)(App);
+
+export default ConnectedApp;
+
+// export default App;

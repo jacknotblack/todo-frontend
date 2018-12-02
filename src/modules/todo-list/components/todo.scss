@@ -1,0 +1,29 @@
+.todo {
+  background: #f2f2f2;
+  border-radius: 5px 5px 0 0;
+
+  padding: 24px 32px;
+  margin: 22px 0 24px 0;
+  .brief {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+  }
+  .left {
+    display: flex;
+  }
+  .right {
+    display: flex;
+  }
+  .name {
+    font-family: Roboto-Medium;
+    font-size: 24px;
+    color: #000000;
+  }
+  &.completed {
+    background: #fff2dc;
+    .name {
+      text-decoration: line-through;
+    }
+  }
+}
