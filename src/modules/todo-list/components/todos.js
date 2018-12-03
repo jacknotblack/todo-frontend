@@ -12,18 +12,16 @@ class Todos extends Component {
   }
 
   toggleAddingNewTodo = () => {
-    console.log(22);
     this.setState({ addingNewTodo: !this.state.addingNewTodo });
   };
   render() {
-    const { todos, editTodo, createTodo, addTodo } = this.props;
+    const { todos, editTodo, createTodo, addTodo, filter } = this.props;
     const { addingNewTodo } = this.state;
     return (
       <div className="todos">
         <div className="add-btn" onClick={() => this.toggleAddingNewTodo()}>
           + Add Task
         </div>
-
         {addingNewTodo ? (
           <Todo
             todo={generateTodo({})}
@@ -36,7 +34,6 @@ class Todos extends Component {
             cancel={this.toggleAddingNewTodo}
           />
         ) : null}
-
         {todos.map(todo => (
           <Todo
             key={todo.id}
@@ -49,6 +46,9 @@ class Todos extends Component {
             addTodo={addTodo}
           />
         ))}
+        {filter === "completed"
+          ? `${todos.filter(todo => todo.completed).length} tasks completed`
+          : `${todos.filter(todo => !todo.completed).length} tasks left`}
       </div>
     );
   }

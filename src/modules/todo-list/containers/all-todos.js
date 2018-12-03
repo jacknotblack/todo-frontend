@@ -2,11 +2,18 @@ import { connect } from "react-redux";
 import Todos from "../components/todos";
 import { todoActions as actions } from "../actions";
 
+const filterUndue = now => todo => {
+  const deadline = new Date(todo.date.split("/").join("-") + " " + todo.time);
+  return deadline > now || todo.date === "";
+};
+
 const filterTodos = state => {
+  const now = new Date();
   switch (state.todos.filter) {
     case "completed":
       return state.todos.todos.filter(todo => todo.completed);
     case "wip":
+      return state.todos.todos.filter(filterUndue(now));
     default:
       return state.todos.todos.sort((a, b) => {
         if (a.star === true && b.star === false) return -1;
@@ -17,7 +24,7 @@ const filterTodos = state => {
 };
 
 const mapStateToProps = state => {
-  return { todos: filterTodos(state) };
+  return { todos: filterTodos(state), filter: state.todos.filter };
 };
 
 const mapDispatchToProps = dispatch => ({

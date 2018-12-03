@@ -15,12 +15,14 @@ export const generateTodo = ({
   completed = false,
   star = false,
   editing = false,
-  comment = ""
+  comment = "",
+  deadline = ""
 }) => {
   return {
     name,
     completed,
     star,
-    comment
+    comment,
+    deadline
   };
 };

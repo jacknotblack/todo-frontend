@@ -113,7 +113,7 @@ const editTodoEpic = action$ =>
         axios({
           method: "PUT",
           url: `http://localhost:8080/api/todos/${action.payload.id}`,
-          data: { ...action.payload, editing: false },
+          data: { ...action.payload },
           headers: { "content-type": "application/json" }
         })
       ).pipe(

@@ -6,7 +6,13 @@ class Todo extends Component {
     super();
     this.state = {
       editing: false,
-      todo: {}
+      name: "",
+      id: -1,
+      completed: false,
+      star: false,
+      deadline: "",
+      date: "",
+      time: ""
     };
   }
 
@@ -15,26 +21,55 @@ class Todo extends Component {
     if (this.props.editing !== undefined) {
       this.setState({ editing: this.props.editing });
     }
-    this.setState({ todo: this.props.todo });
+    this.setState({ ...this.props.todo });
   }
 
+  componentDidUpdate(props) {
+    // if (props.todo.id !== this.state.id)
+    // this.setState({ todo: this.props.todo });
+  }
+
+  getTodo = () => {
+    const { name, id, completed, star, deadline, date, time } = this.state;
+    return { name, id, completed, star, deadline, date, time };
+  };
+
   toggleStar = () => {
-    console.log(11);
-    const { todo } = this.props;
-    this.props.editTodo({ ...todo, star: !todo.star });
+    const todo = this.getTodo();
+    if (this.props.todo.id !== undefined) {
+      this.props.editTodo({ ...todo, star: !todo.star });
+    }
   };
 
   toggleTodoStatus = status => {
     const { todo } = this.props;
-    this.props.editTodo({ ...todo, [status]: !todo[status] });
+    this.setState({
+      [status]: !this.state[status]
+    });
+    if (this.props.todo.id !== undefined) {
+      this.props.editTodo({ ...todo, [status]: !todo[status] });
+    }
   };
+
+  inputDate = e => {
+    this.setState({
+      date: e.target.value
+    });
+  };
+
+  inputTime = e => {
+    this.setState({
+      time: e.target.value
+    });
+  };
+
   editTodo = () => {
-    this.props.editTodo(this.state.todo);
+    this.props.editTodo(this.getTodo());
     this.setState({ editing: false });
   };
 
   addTodo = () => {
-    this.props.addTodo(this.state.todo);
+    this.props.addTodo(this.getTodo());
     this.setState({ editing: false });
   };
 
@@ -44,8 +79,8 @@ class Todo extends Component {
   };
 
   render() {
-    const { completed, name } = this.props.todo;
-    const { editing } = this.state;
+    // const { name } = this.props.todo;
+    const { name, completed, editing, date, time, comment, star } = this.state;
     return (
       <div className="todo">
         <div className={`brief ${completed ? "completed" : ""}`}>
@@ -62,14 +97,12 @@ class Todo extends Component {
               {editing ? (
                 <input
                   type="text"
-                  value={this.state.todo.name}
+                  value={name}
                   onChange={e => {
                     this.setState({
-                      todo: {
-                        ...this.state.todo,
-                        name: e.target.value
-                      }
+                      name: e.target.value
                     });
+                    console.log(this.state);
                   }}
                 />
               ) : (
@@ -83,7 +116,7 @@ class Todo extends Component {
                 this.toggleTodoStatus("star");
               }}
             >
-              {this.props.todo.star ? (
+              {star ? (
                 <i className="fas fa-star" />
               ) : (
                 <i className="far fa-star" />
@@ -106,6 +139,32 @@ class Todo extends Component {
                   <i className="far fa-calendar-alt" />
                   Deadline
                 </span>
+                <br />
+                <br />
+                <div className="date-inputs">
+                  <input
+                    value={date}
+                    type="text"
+                    placeholder="yyyy/mm/dd"
+                    onChange={e => {
+                      this.setState({
+                        date: e.target.value
+                      });
+                    }}
+                    // onBlur={this.inputDate}
+                  />
+                  <input
+                    value={time}
+                    type="text"
+                    placeholder="hh:mm"
+                    onChange={e => {
+                      this.setState({
+                        time: e.target.value
+                      });
+                    }}
+                    // onBlur={this.inputTime}
+                  />
+                </div>
               </div>
               <div className="content-row">
                 <span>
@@ -120,11 +179,11 @@ class Todo extends Component {
                 </span>{" "}
                 <br /> <br />
                 <textarea
-                  value={this.state.todo.comment}
+                  value={comment}
                   placeholder="Type your memo here…"
                   onChange={e => {
                     this.setState({
-                      todo: { ...this.state.todo, comment: e.target.value }
+                      comment: e.target.value
                     });
                   }}
                 />
