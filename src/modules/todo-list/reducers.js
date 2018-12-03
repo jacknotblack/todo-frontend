@@ -24,12 +24,12 @@ const todoReducers = (state = initState, action) => {
         todos: [action.payload, ...state.todos]
       };
     case "ADD_TODO_SUCCESS":
-      let todos = deepCopy(state.todos);
-      todos.splice(0, 1, action.payload);
-      return { ...state, todos };
+      // let todos = deepCopy(state.todos);
+      // todos.splice(0, 1, action.payload);
+      return { ...state, todos: [action.payload, ...state.todos] };
 
     case "EDIT_TODO_SUCCESS":
-      todos = deepCopy(state.todos);
+      let todos = deepCopy(state.todos);
       todos.splice(
         todos.findIndex(t => t.id === action.payload.id),
         1,

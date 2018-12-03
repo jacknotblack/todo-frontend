@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import "./todo.scss";
 
 class Todo extends Component {
@@ -11,11 +11,18 @@ class Todo extends Component {
   }
 
   componentDidMount() {
-    if (this.props.todo.editing !== undefined) {
-      this.setState({ editing: this.props.todo.editing });
+    console.log(this.props.todo);
+    if (this.props.editing !== undefined) {
+      this.setState({ editing: this.props.editing });
     }
     this.setState({ todo: this.props.todo });
   }
+
+  toggleStar = () => {
+    console.log(11);
+    const { todo } = this.props;
+    this.props.editTodo({ ...todo, star: !todo.star });
+  };
 
   completeTodo = () => {
     const { todo } = this.props;
@@ -29,6 +36,11 @@ class Todo extends Component {
   addTodo = () => {
     this.props.addTodo(this.state.todo);
     this.setState({ editing: false });
+  };
+
+  cancel = () => {
+    if (this.props.cancel) this.props.cancel();
+    else this.setState({ editing: false });
   };
 
   render() {
@@ -64,46 +76,70 @@ class Todo extends Component {
             </div>
           </div>
           <div className="right">
-            <div>{this.props.todo.star ? "star" : "noStar"}</div>
+            <div onClick={this.toggleStar}>
+              {this.props.todo.star ? (
+                <i className="fas fa-star" />
+              ) : (
+                <i className="far fa-star" />
+              )}
+            </div>
             <div
               onClick={() => {
                 this.setState({ editing: !this.state.editing });
               }}
             >
-              {editing ? "editing" : "edit"}
+              <i className={`fas fa-pen ${editing ? "blue" : ""}`} />
             </div>
           </div>
         </div>
         {editing ? (
-          <div className="edit-panel">
-            <div className="deadline">
-              <span>Deadline</span>
-            </div>
-            <div>File</div>
-            <div>
-              <span>Comment</span>
-              <textarea
-                value={this.state.todo.comment}
-                placeholder="Type your memo here…"
-                onChange={e => {
-                  this.setState({
-                    todo: { ...this.state.todo, comment: e.target.value }
-                  });
-                }}
-              />
+          <Fragment>
+            <div className="edit-panel">
+              <div className="content-row">
+                <span>
+                  <i className="far fa-calendar-alt" />
+                  Deadline
+                </span>
+              </div>
+              <div className="content-row">
+                <span>
+                  <i className="far fa-file" />
+                  File
+                </span>
+              </div>
+              <div className="content-row">
+                <span>
+                  <i className="far fa-comment-dots" />
+                  Comment
+                </span>{" "}
+                <br /> <br />
+                <textarea
+                  value={this.state.todo.comment}
+                  placeholder="Type your memo here…"
+                  onChange={e => {
+                    this.setState({
+                      todo: { ...this.state.todo, comment: e.target.value }
+                    });
+                  }}
+                />
+              </div>
             </div>
             <div className="control-btns">
-              <div className="X cancel">Cancel</div>
+              <div className="cancel" onClick={this.cancel}>
+                X Cancel
+              </div>
               <div
                 className="save"
                 onClick={
-                  this.props.todo.id === -1 ? this.addTodo : this.editTodo
+                  this.props.todo.id === undefined
+                    ? this.addTodo
+                    : this.editTodo
                 }
               >
                 + Save
               </div>
             </div>
-          </div>
+          </Fragment>
         ) : null}
       </div>
     );

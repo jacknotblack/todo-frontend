@@ -10,4 +10,17 @@ export const deepCopy = o => {
   return output;
 };
 
-export const otherTools = {};
+export const generateTodo = ({
+  name = "",
+  completed = false,
+  star = false,
+  editing = false,
+  comment = ""
+}) => {
+  return {
+    name,
+    completed,
+    star,
+    comment
+  };
+};
