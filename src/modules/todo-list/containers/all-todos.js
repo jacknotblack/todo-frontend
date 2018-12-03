@@ -8,7 +8,11 @@ const filterTodos = state => {
       return state.todos.todos.filter(todo => todo.completed);
     case "wip":
     default:
-      return state.todos.todos;
+      return state.todos.todos.sort((a, b) => {
+        if (a.star === true && b.star === false) return -1;
+        else if (a.star === false && b.star === true) return 1;
+        return 0;
+      });
   }
 };
 

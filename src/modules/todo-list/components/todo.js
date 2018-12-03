@@ -24,9 +24,9 @@ class Todo extends Component {
     this.props.editTodo({ ...todo, star: !todo.star });
   };
 
-  completeTodo = () => {
+  toggleTodoStatus = status => {
     const { todo } = this.props;
-    this.props.editTodo({ ...todo, completed: !todo.completed });
+    this.props.editTodo({ ...todo, [status]: !todo[status] });
   };
   editTodo = () => {
     this.props.editTodo(this.state.todo);
@@ -54,7 +54,9 @@ class Todo extends Component {
               type="checkbox"
               name="completed"
               checked={completed}
-              onChange={this.completeTodo}
+              onChange={() => {
+                this.toggleTodoStatus("completed");
+              }}
             />
             <div className="name">
               {editing ? (
@@ -76,7 +78,11 @@ class Todo extends Component {
             </div>
           </div>
           <div className="right">
-            <div onClick={this.toggleStar}>
+            <div
+              onClick={() => {
+                this.toggleTodoStatus("star");
+              }}
+            >
               {this.props.todo.star ? (
                 <i className="fas fa-star" />
               ) : (
