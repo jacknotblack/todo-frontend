@@ -26,7 +26,6 @@ class Todos extends Component {
           <Todo
             todo={generateTodo({})}
             addTodo={todo => {
-              console.log(todo);
               addTodo(todo);
               this.setState({ addingNewTodo: false });
             }}

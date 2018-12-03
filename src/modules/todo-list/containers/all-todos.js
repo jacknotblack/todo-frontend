@@ -3,6 +3,7 @@ import Todos from "../components/todos";
 import { todoActions as actions } from "../actions";
 
 const filterUndue = now => todo => {
+  if (todo.completed) return false;
   const deadline = new Date(todo.date.split("/").join("-") + " " + todo.time);
   return deadline > now || todo.date === "";
 };
